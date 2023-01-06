@@ -16,15 +16,18 @@ import ReactQuill, { Quill } from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import "../styles/text-editor.css";
 
+export const EDITOR_CONFIG = {
+  colors: ["#fff", "#000", "#00C292", "#0BB2FB", "#E46A76"],
+  fonts: ["Roboto", "Raleway", "Montserrat", "Lato", "Rubik"]
+};
+
 // ------------------------------------------ //
 // ------------- Quil config ---------------- //
 // ------------------------------------------ //
 // ----------- load fonts ----------- //
 const Font = Quill.import("formats/font");
-Font.whitelist = ["Roboto", "Raleway", "Montserrat", "Lato", "Rubik"];
+Font.whitelist = EDITOR_CONFIG.fonts;
 Quill.register(Font, true);
-
-const colors = ["#e60000", "#9933ff", "#00ff00"];
 
 // ----------- toolbar ----------- //
 const toolbarOptions = [
@@ -40,7 +43,7 @@ const toolbarOptions = [
 
   [{ size: ["small", false, "large", "huge"] }], // custom dropdown
 
-  [{ color: colors }, { background: colors }], // dropdown with defaults from theme
+  [{ color: EDITOR_CONFIG.colors }, { background: EDITOR_CONFIG.colors }], // dropdown with defaults from theme
   [{ font: Font.whitelist }],
   [{ align: [] }]
 ];
