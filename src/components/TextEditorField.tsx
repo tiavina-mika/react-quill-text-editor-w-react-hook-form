@@ -15,9 +15,10 @@ import ReactQuill, { Quill } from "react-quill";
 
 import "react-quill/dist/quill.snow.css";
 import "../styles/text-editor.css";
+import { getMUIColorsList } from "../utils/utils";
 
 export const EDITOR_CONFIG = {
-  colors: ["#fff", "#000", "#00C292", "#0BB2FB", "#E46A76"],
+  colors: getMUIColorsList(),
   fonts: ["Roboto", "Raleway", "Montserrat", "Lato", "Rubik"]
 };
 
