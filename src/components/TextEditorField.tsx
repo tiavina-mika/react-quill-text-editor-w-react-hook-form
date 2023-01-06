@@ -3,7 +3,6 @@ import { FC } from "react";
 import { Box, FormHelperText, InputLabel } from "@mui/material";
 import { Controller, useFormContext } from "react-hook-form";
 import "react-quill/dist/quill.snow.css";
-import { isString } from "@utils/utils";
 
 import ReactQuill from "react-quill";
 
