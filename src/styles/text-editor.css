@@ -1,3 +1,22 @@
+/* --------------- editor --------------- */
+.ql-editor {
+  min-height: 200px;
+}
+
+.ql-picker {
+  background-color: #ededed;
+  border-radius: 2px;
+}
+.ql-formats .ql-header option,
+.ql-toolbar {
+  font-family: "Roboto" !important;
+}
+
+.ql-picker {
+  background-color: #ededed;
+  border-radius: 2px;
+}
+
 .ql-picker.ql-font .ql-picker-item {
   font-size: 0;
 }
