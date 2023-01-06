@@ -1,6 +1,13 @@
 import { FC, SyntheticEvent, useState } from "react";
 
-import { Box, FormHelperText, InputLabel, Tab, Tabs } from "@mui/material";
+import {
+  Box,
+  FormHelperText,
+  InputLabel,
+  Tab,
+  Tabs,
+  styled
+} from "@mui/material";
 import { Controller, useFormContext } from "react-hook-form";
 
 import parseHtml from "html-react-parser";
@@ -9,6 +16,9 @@ import ReactQuill, { Quill } from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import "../styles/text-editor.css";
 
+// ------------------------------------------ //
+// ------------- Quil config ---------------- //
+// ------------------------------------------ //
 // ----------- load fonts ----------- //
 const Font = Quill.import("formats/font");
 Font.whitelist = ["Roboto", "Raleway", "Montserrat", "Lato", "Rubik"];
@@ -35,6 +45,59 @@ const toolbarOptions = [
   [{ align: [] }]
 ];
 
+// ------------------------------------------ //
+// --------------- Tabs --------------------- //
+// ------------------------------------------ //
+interface StyledTabsProps {
+  children?: React.ReactNode;
+  value: "editor" | "preview";
+  onChange: (event: SyntheticEvent, newValue: "editor" | "preview") => void;
+}
+
+const StyledTabs = styled((props: StyledTabsProps) => (
+  <Tabs
+    {...props}
+    TabIndicatorProps={{ children: <span className="MuiTabs-indicatorSpan" /> }}
+  />
+))({
+  "& .MuiTabs-indicator": {
+    display: "flex",
+    justifyContent: "center",
+    backgroundColor: "transparent"
+  },
+  "& .MuiTabs-indicatorSpan": {
+    maxWidth: 40,
+    width: "100%",
+    backgroundColor: "transparent"
+  }
+});
+
+interface StyledTabProps {
+  label: string;
+  value: "editor" | "preview";
+}
+
+const StyledTab = styled((props: StyledTabProps) => (
+  <Tab disableRipple {...props} />
+))(({ theme }) => ({
+  textTransform: "none",
+  fontWeight: theme.typography.fontWeightRegular,
+  fontSize: theme.typography.pxToRem(15),
+  marginRight: theme.spacing(1),
+  "&.Mui-selected": {
+    color: "#000",
+    backgroundColor: "#ededed",
+    borderTopLeftRadius: 2,
+    borderTopRightRadius: 2
+  },
+  "&.Mui-focusVisible": {
+    backgroundColor: "rgba(100, 95, 228, 0.32)"
+  }
+}));
+
+// ------------------------------------------ //
+// -------------- component ----------------- //
+// ------------------------------------------ //
 type Props = {
   name: string;
   label?: string;
@@ -62,18 +125,14 @@ const TextEditorField: FC<Props> = ({ name, label, helperText }) => {
       )}
 
       {/* ----------- tabs ----------- */}
-      <Tabs
+      <StyledTabs
         value={tab}
         onChange={handleTabChange}
         aria-label="basic tabs example"
       >
-        <Tab label="Editor" value="editor" sx={{ textTransform: "inherit" }} />
-        <Tab
-          label="Preview"
-          value="preview"
-          sx={{ textTransform: "inherit" }}
-        />
-      </Tabs>
+        <StyledTab label="Editor" value="editor" />
+        <StyledTab label="Preview" value="preview" />
+      </StyledTabs>
 
       {/* ----------- editor tab ----------- */}
       {tab === "editor" && (
