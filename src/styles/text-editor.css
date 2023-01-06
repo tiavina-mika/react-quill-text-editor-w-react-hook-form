@@ -12,8 +12,9 @@
   font-family: "Roboto" !important;
 }
 
-.ql-picker-options {
-  width: 500px;
+.ql-color-picker .ql-picker-options,
+.ql-background-picker .ql-picker-options {
+  width: 500px !important;
 }
 
 .ql-picker {
