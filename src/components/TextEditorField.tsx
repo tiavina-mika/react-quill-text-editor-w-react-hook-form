@@ -1,9 +1,10 @@
-import { FC } from "react";
+import { FC, Fragment, SyntheticEvent, useState } from "react";
 
-import { Box, FormHelperText, InputLabel } from "@mui/material";
+import { Box, FormHelperText, InputLabel, Tab, Tabs } from "@mui/material";
 import { Controller, useFormContext } from "react-hook-form";
 import "react-quill/dist/quill.snow.css";
 
+import parse from "html-react-parser";
 import ReactQuill from "react-quill";
 
 const toolbarOptions = [
@@ -30,35 +31,64 @@ type Props = {
 };
 
 const TextEditorField: FC<Props> = ({ name, label, helperText }) => {
+  const [tab, setTab] = useState<"editor" | "preview">("editor");
+  const [editorValue, setEditorValue] = useState<string>("");
+
   // hooks
   const {
     control,
     formState: { errors }
   } = useFormContext();
 
+  const handleTabChange = (_: SyntheticEvent, value: "editor" | "preview") =>
+    setTab(value);
+
   return (
-    <Controller
-      control={control}
-      name={name}
-      render={({ field: { value, onChange } }) => (
-        <Box>
-          {label && (
-            <InputLabel sx={{ mb: 0.8, color: "#000" }}>{label}</InputLabel>
-          )}
-          <ReactQuill
-            theme="snow"
-            value={value}
-            onChange={onChange}
-            modules={{ toolbar: toolbarOptions }}
-          />
-          ;
-          {errors[name] && (
-            <FormHelperText error>{(errors as any)[name]}</FormHelperText>
-          )}
-          {helperText && <FormHelperText>{helperText}</FormHelperText>}
-        </Box>
+    <>
+      {label && (
+        <InputLabel sx={{ mb: 0.8, color: "#000" }}>{label}</InputLabel>
       )}
-    />
+      <Tabs
+        value={tab}
+        onChange={handleTabChange}
+        aria-label="basic tabs example"
+      >
+        <Tab label="Editor" value="editor" sx={{ textTransform: "inherit" }} />
+        <Tab
+          label="Preview"
+          value="preview"
+          sx={{ textTransform: "inherit" }}
+        />
+      </Tabs>
+
+      {/* editor tab */}
+      {tab === "editor" && (
+        <Controller
+          control={control}
+          name={name}
+          render={({ field: { value, onChange } }) => (
+            <Box>
+              <ReactQuill
+                theme="snow"
+                value={value}
+                onChange={(value) => {
+                  onChange(value);
+                  setEditorValue(value);
+                }}
+                modules={{ toolbar: toolbarOptions }}
+              />
+              ;
+              {errors[name] && (
+                <FormHelperText error>{(errors as any)[name]}</FormHelperText>
+              )}
+              {helperText && <FormHelperText>{helperText}</FormHelperText>}
+            </Box>
+          )}
+        />
+      )}
+
+      {tab === "preview" && parse(editorValue)}
+    </>
   );
 };
 

@@ -6,6 +6,7 @@
     "@mui/material": "latest",
     "@types/react": "latest",
     "@types/react-dom": "latest",
+    "html-react-parser": "3.0.7",
     "react": "latest",
     "react-dom": "latest",
     "react-hook-form": "7.39.5",
