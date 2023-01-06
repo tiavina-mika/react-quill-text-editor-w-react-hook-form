@@ -35,6 +35,7 @@ const toolbarOptions = [
   [{ header: [1, 2, 3, 4, 5, 6, false] }],
   [{ color: EDITOR_CONFIG.colors }, { background: EDITOR_CONFIG.colors }], // dropdown with defaults from theme
 
+  ["link"],
   ["bold", "italic", "underline", "strike"], // toggled buttons
   ["blockquote", "code-block"],
 
@@ -154,7 +155,6 @@ const TextEditorField: FC<Props> = ({ name, label, helperText }) => {
                 }}
                 modules={{ toolbar: toolbarOptions }}
               />
-              ;
               {errors[name] && (
                 <FormHelperText error>{(errors as any)[name]}</FormHelperText>
               )}
