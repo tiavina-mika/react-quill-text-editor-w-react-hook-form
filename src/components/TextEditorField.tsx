@@ -8,6 +8,8 @@ import parseHtml from "html-react-parser";
 import ReactQuill from "react-quill";
 
 const toolbarOptions = [
+  [{ header: [1, 2, 3, 4, 5, 6, false] }],
+
   ["bold", "italic", "underline", "strike"], // toggled buttons
   ["blockquote", "code-block"],
 
@@ -17,7 +19,6 @@ const toolbarOptions = [
   [{ direction: "rtl" }], // text direction
 
   [{ size: ["small", false, "large", "huge"] }], // custom dropdown
-  [{ header: [1, 2, 3, 4, 5, 6, false] }],
 
   [{ color: [] }, { background: [] }], // dropdown with defaults from theme
   [{ font: [] }],
