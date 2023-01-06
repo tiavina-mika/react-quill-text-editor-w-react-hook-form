@@ -4,7 +4,7 @@ import { Box, FormHelperText, InputLabel, Tab, Tabs } from "@mui/material";
 import { Controller, useFormContext } from "react-hook-form";
 import "react-quill/dist/quill.snow.css";
 
-import parse from "html-react-parser";
+import parseHtml from "html-react-parser";
 import ReactQuill from "react-quill";
 
 const toolbarOptions = [
@@ -87,7 +87,7 @@ const TextEditorField: FC<Props> = ({ name, label, helperText }) => {
         />
       )}
 
-      {tab === "preview" && parse(editorValue)}
+      {tab === "preview" && parseHtml(editorValue)}
     </>
   );
 };
