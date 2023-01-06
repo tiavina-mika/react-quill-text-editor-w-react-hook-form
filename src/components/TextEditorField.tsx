@@ -2,11 +2,21 @@ import { FC, Fragment, SyntheticEvent, useState } from "react";
 
 import { Box, FormHelperText, InputLabel, Tab, Tabs } from "@mui/material";
 import { Controller, useFormContext } from "react-hook-form";
-import "react-quill/dist/quill.snow.css";
 
 import parseHtml from "html-react-parser";
-import ReactQuill from "react-quill";
+import ReactQuill, { Quill } from "react-quill";
 
+import "react-quill/dist/quill.snow.css";
+import "../styles/text-editor.css";
+
+// ----------- load fonts ----------- //
+const Font = Quill.import("formats/font");
+Font.whitelist = ["Roboto", "Raleway", "Montserrat", "Lato", "Rubik"];
+Quill.register(Font, true);
+
+const colors = ["#e60000", "#9933ff", "#00ff00"];
+
+// ----------- toolbar ----------- //
 const toolbarOptions = [
   [{ header: [1, 2, 3, 4, 5, 6, false] }],
 
@@ -20,8 +30,8 @@ const toolbarOptions = [
 
   [{ size: ["small", false, "large", "huge"] }], // custom dropdown
 
-  [{ color: [] }, { background: [] }], // dropdown with defaults from theme
-  [{ font: [] }],
+  [{ color: colors }, { background: colors }], // dropdown with defaults from theme
+  [{ font: Font.whitelist }],
   [{ align: [] }]
 ];
 
@@ -46,9 +56,12 @@ const TextEditorField: FC<Props> = ({ name, label, helperText }) => {
 
   return (
     <>
+      {/* ----------- label ----------- */}
       {label && (
         <InputLabel sx={{ mb: 0.8, color: "#000" }}>{label}</InputLabel>
       )}
+
+      {/* ----------- tabs ----------- */}
       <Tabs
         value={tab}
         onChange={handleTabChange}
@@ -62,7 +75,7 @@ const TextEditorField: FC<Props> = ({ name, label, helperText }) => {
         />
       </Tabs>
 
-      {/* editor tab */}
+      {/* ----------- editor tab ----------- */}
       {tab === "editor" && (
         <Controller
           control={control}
@@ -88,6 +101,7 @@ const TextEditorField: FC<Props> = ({ name, label, helperText }) => {
         />
       )}
 
+      {/* ----------- preview tab ----------- */}
       {tab === "preview" && parseHtml(editorValue)}
     </>
   );
