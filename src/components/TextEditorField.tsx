@@ -33,6 +33,7 @@ Quill.register(Font, true);
 // ----------- toolbar ----------- //
 const toolbarOptions = [
   [{ header: [1, 2, 3, 4, 5, 6, false] }],
+  [{ color: EDITOR_CONFIG.colors }, { background: EDITOR_CONFIG.colors }], // dropdown with defaults from theme
 
   ["bold", "italic", "underline", "strike"], // toggled buttons
   ["blockquote", "code-block"],
@@ -44,7 +45,6 @@ const toolbarOptions = [
 
   [{ size: ["small", false, "large", "huge"] }], // custom dropdown
 
-  [{ color: EDITOR_CONFIG.colors }, { background: EDITOR_CONFIG.colors }], // dropdown with defaults from theme
   [{ font: Font.whitelist }],
   [{ align: [] }]
 ];
